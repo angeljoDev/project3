@@ -1,0 +1,15 @@
+# Ignorar archivos específicos
+minikube.exe
+kubectl.exe
+kind.exe
+decoded_password.txt
+.env
+
+# También puedes ignorar todos los archivos ejecutables con la extensión .exe
+*.exe
+
+# Ignorar archivos .txt que contienen contraseñas codificadas
+*password.txt
+
+# Ignorar archivos .env que podrían contener configuraciones sensibles
+*.env

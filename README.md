@@ -37,7 +37,7 @@ This should set up a Postgre deployment at `<SERVICE_NAME>-postgresql.default.sv
 
 By default, it will create a username `postgres`. The password can be retrieved with the following command:
 ```bash
-export POSTGRES_PASSWORD=$(kubectl get secret --namespace default <SERVICE_NAME>-postgresql -o jsonpath="{.data.postgres-password}" | base64 -d)
+export POSTGRES_PASSWORD=$(kubectl get secret --namespace default postgres-repo-postgresql -o jsonpath="{.data.postgres-password}" | base64 -d)
 
 echo $POSTGRES_PASSWORD
 ```
@@ -49,7 +49,7 @@ The database is accessible within the cluster. This means that when you will hav
 
 * Connecting Via Port Forwarding
 ```bash
-kubectl port-forward --namespace default svc/<SERVICE_NAME>-postgresql 5432:5432 &
+kubectl port-forward --namespace default svc/repo-postgres-postgresql 5432:5432 &
     PGPASSWORD="$POSTGRES_PASSWORD" psql --host 127.0.0.1 -U postgres -d postgres -p 5432
 ```
 
