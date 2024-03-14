@@ -2,6 +2,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: postgresql
+  labels:
+    app.kubernetes.io/managed-by: Helm
 spec:
   selector:
     matchLabels:
@@ -14,19 +16,40 @@ spec:
       containers:
       - name: postgresql
         image: postgres:latest
+        resources:
+          requests:
+            memory: "512Mi"
+            cpu: "100m"
+          limits:
+            memory: "1Gi"
+            cpu: "500m"
         env:
         - name: POSTGRES_DB
-          value: mydatabase
+          valueFrom:
+            secretKeyRef:
+              name: my-secret
+              key: POSTGRES_DB
         - name: POSTGRES_USER
-          value: myuser
+          valueFrom:
+            secretKeyRef:
+              name: my-secret
+              key: POSTGRES_USER
         - name: POSTGRES_PASSWORD
-          value: mypassword
+          valueFrom:
+            secretKeyRef:
+              name: my-secret
+              key: POSTGRES_PASSWORD
         ports:
         - containerPort: 5432
         volumeMounts:
         - mountPath: /var/lib/postgresql/data
-          name: postgresql-storage
+          name: postgresql-storage 
+        - mountPath: /var/run/secrets/my-secret
+          name: my-secret-volume
       volumes:
       - name: postgresql-storage
         persistentVolumeClaim:
           claimName: postgresql-pvc
+      - name: my-secret-volume
+        secret:
+          secretName: my-secret
