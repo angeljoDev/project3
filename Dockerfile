@@ -10,6 +10,6 @@ COPY ./analytics/requirements.txt requirements.txt
 RUN pip install -r requirements.txt
 
 COPY ./analytics .
-#checking codbuild aut
+#checking codbuild automate
 
 CMD python app.py
