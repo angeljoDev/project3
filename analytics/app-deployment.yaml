@@ -1,4 +1,3 @@
-
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -12,12 +11,15 @@ spec:
       service: coworking
   template:
     metadata:
+      annotations:
+        iam.amazonaws.com/role: arn:aws:iam::473571294504:role/eksctl-eks-pj-cluster-ServiceRole-qYi2mP6BBLSJ
+        cloudwatch.amazonaws.com/log-group: /aws/eks/eks-pj/cluster/logs
       labels:
         service: coworking
     spec:
       containers:
       - name: coworking
-        image: 473571294504.dkr.ecr.us-east-1.amazonaws.com/coworking:0.0.1
+        image: 473571294504.dkr.ecr.us-east-1.amazonaws.com/coworking:0.0.2
         imagePullPolicy: IfNotPresent
         livenessProbe:
           httpGet:
