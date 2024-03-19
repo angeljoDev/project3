@@ -3,8 +3,10 @@ kind: Service
 metadata:
   name: postgresql-service
 spec:
+  type: NodePort
   ports:
   - port: 5432
     targetPort: 5432
+    protocol: TCP
   selector:
     app.kubernetes.io/name: postgresql
