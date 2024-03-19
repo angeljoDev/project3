@@ -52,7 +52,7 @@ def get_daily_visits():
 def daily_visits():
     return jsonify(get_daily_visits())
 
-
+#retry
 @app.route("/api/reports/user_visits", methods=["GET"])
 def all_user_visits():
     result = db.session.execute(text("""
